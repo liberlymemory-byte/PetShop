@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetShop – Banho, tosa e transporte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+ <div class="wrap bar">
+  <a class="brand" href="#inicio">
+   <svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="14" cy="28" rx="7" ry="10"/><ellipse cx="27" cy="15" rx="7" ry="10"/><ellipse cx="45" cy="15" rx="7" ry="10"/><ellipse cx="58" cy="28" rx="7" ry="10"/><path d="M32 30c-10 0-20 10-20 19 0 7 6 9 12 8 5-1 6-2 8-2s3 1 8 2c6 1 12-1 12-8 0-9-10-19-20-19z"/></svg>
+   PetShop
+  </a>
+  <nav aria-label="Principal">
+   <a href="#servicos">Serviços</a>
+   <a href="#orcamento">Orçamento</a>
+   <a href="#api">API</a>
+  </nav>
+ </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+ <div class="wrap">
+  <div>
+   <h1>Banho, tosa e transporte para o seu pet</h1>
+   <p>Escolha o serviço e o porte e veja o valor na hora. O orçamento é calculado pela API do PetShop, com as mesmas regras usadas no sistema.</p>
+   <a class="btn sun" href="#orcamento">Calcular orçamento</a>
+  </div>
+
+  <form class="sim" id="orcamento" novalidate>
+   <h2>Orçamento rápido</h2>
+   <label>Nome do pet
+    <input id="nome" name="nome" autocomplete="off" placeholder="Ex.: Thor">
+   </label>
+   <label>Serviço
+    <select id="servico"><option value="banho">Banho</option><option value="tosa">Tosa</option><option value="transporte">Transporte</option></select>
+   </label>
+   <div class="row" id="campos-porte">
+    <label>Porte
+     <select id="porte"><option value="pequeno">Pequeno</option><option value="medio">Médio</option><option value="grande">Grande</option></select>
+    </label>
+    <label>Desconto (%) <span class="hint">0 a 20</span>
+     <input id="desconto" type="number" min="0" max="20" step="1" value="0">
+    </label>
+   </div>
+   <label id="campo-dist" hidden>Distância (km)
+    <input id="distancia" type="number" min="0" step="0.1" placeholder="Ex.: 5">
+   </label>
+   <button class="btn blue" type="submit">Calcular valor</button>
+   <div id="res" aria-live="polite"></div>
+  </form>
+ </div>
+</section>
+
+<section class="blk" id="servicos">
+ <div class="wrap">
+  <h2>Nossos serviços</h2>
+  <p class="lead">Cuidado completo para cães e gatos de todos os tamanhos, com preço por porte e transporte para quem não pode ir até a loja.</p>
+  <div class="cols">
+   <article class="svc">
+    <h3>Banho</h3>
+    <p>Higiene completa, do pelo às patinhas.</p>
+    <ul><li>Pequeno <b>R$ 40,00</b></li><li>Médio <b>R$ 60,00</b></li><li>Grande <b>R$ 80,00</b></li></ul>
+   </article>
+   <article class="svc">
+    <h3>Tosa</h3>
+    <p>Corte feito com calma e no ponto certo.</p>
+    <ul><li>Pequeno <b>R$ 30,00</b></li><li>Médio <b>R$ 45,00</b></li><li>Grande <b>R$ 60,00</b></li></ul>
+   </article>
+   <article class="svc big">
+    <h3>Transporte</h3>
+    <p>Buscamos e levamos o seu pet de volta em segurança.</p>
+    <ul><li>Valor por quilômetro <b>R$ 3,50</b></li><li>Cobrança <b>pela distância</b></li></ul>
+   </article>
+  </div>
+  <p class="note">Banho e tosa aceitam desconto de 0% a 20%. O transporte é calculado à parte.</p>
+ </div>
+</section>
+
+<section class="blk api" id="api">
+ <div class="wrap">
+  <h2>Conectado à API do projeto</h2>
+  <p class="lead">Esta página conversa com o back-end em FastAPI. Informe o endereço onde a API está rodando e teste a conexão.</p>
+  <div class="apibar">
+   <label>Endereço da API
+    <input id="base" value="http://127.0.0.1:8000" spellcheck="false">
+   </label>
+   <button class="btn blue" id="testar" type="button">Testar conexão</button>
+  </div>
+  <p id="status" aria-live="polite">Verificando a API…</p>
+  <div class="tbl">
+   <table>
+    <thead><tr><th>Rota</th><th>O que faz</th></tr></thead>
+    <tbody>
+     <tr><td><code>GET /health</code></td><td>Confirma que a API está funcionando.</td></tr>
+     <tr><td><code>GET /servicos</code></td><td>Lista os serviços disponíveis.</td></tr>
+     <tr><td><code>POST /orcamento</code></td><td>Calcula banho ou tosa por porte, com desconto opcional.</td></tr>
+     <tr><td><code>POST /transporte</code></td><td>Calcula o transporte pela distância em km.</td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">PetShop – Banho, Tosa &amp; Transporte. Projeto final de Testes e Qualidade de Software.</div>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const brl = v => Number(v).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const base = () => $('#base').value.trim().replace(/\/+$/, '');
+
+// Se a API não responder (ex.: não está rodando ou o navegador bloqueou por CORS),
+// o orçamento é calculado aqui com as mesmas regras do back-end. Para desligar: false.
+const OFFLINE = true;
+const PRECOS = {banho:{pequeno:40, medio:60, grande:80}, tosa:{pequeno:30, medio:45, grande:60}};
+
+async function api(path, opts) {
+  const r = await fetch(base() + path, opts);
+  let data = null;
+  try { data = await r.json(); } catch (_) {}
+  if (!r.ok) {
+    const d = data && data.detail;
+    const e = new Error(typeof d === 'string' ? d : 'Confira os campos preenchidos.');
+    e.business = true;
+    throw e;
+  }
+  return data;
+}
+
+function local(path, p) {
+  const fail = m => { const e = new Error(m); e.business = true; throw e; };
+  if (!p.nome_pet.trim()) fail('O nome não pode estar vazio.');
+  if (path === '/transporte') {
+    if (!(p.distancia > 0)) fail('A distância deve ser maior que zero.');
+    return {pet: p.nome_pet.trim(), distancia_km: p.distancia, valor_transporte: p.distancia * 3.5};
+  }
+  const valor = (PRECOS[p.servico] || {})[p.porte];
+  if (valor === undefined) fail('Porte inválido.');
+  if (!(p.desconto >= 0 && p.desconto <= 20)) fail('O desconto deve estar entre 0% e 20%.');
+  return {pet: p.nome_pet.trim(), servico: p.servico, porte: p.porte, valor_original: valor,
+          desconto: p.desconto, valor_final: valor - valor * p.desconto / 100};
+}
+
+function toggleCampos() {
+  const t = $('#servico').value === 'transporte';
+  $('#campos-porte').hidden = t;
+  $('#campo-dist').hidden = !t;
+}
+
+$('#servico').addEventListener('change', toggleCampos);
+
+$('#orcamento').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const servico = $('#servico').value;
+  const nome = $('#nome').value;
+  const res = $('#res');
+  const transporte = servico === 'transporte';
+  const path = transporte ? '/transporte' : '/orcamento';
+  const body = transporte
+    ? {nome_pet: nome, distancia: parseFloat($('#distancia').value) || 0}
+    : {nome_pet: nome, servico, porte: $('#porte').value, desconto: parseFloat($('#desconto').value) || 0};
+
+  let data, origem = 'Calculado pela API do PetShop.';
+  try {
+    data = await api(path, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+  } catch (e) {
+    if (e.business) { res.innerHTML = '<p class="err">' + esc(e.message) + '</p>'; return; }
+    if (!OFFLINE) { res.innerHTML = '<p class="err">Não foi possível falar com a API em ' + esc(base()) + '. Confira se ela está rodando.</p>'; return; }
+    try { data = local(path, {...body, servico, porte: body.porte}); origem = 'A API não respondeu, então o valor foi calculado aqui no navegador com as mesmas regras.'; }
+    catch (e2) { res.innerHTML = '<p class="err">' + esc(e2.message) + '</p>'; return; }
+  }
+
+  res.innerHTML = transporte
+    ? '<div class="res"><dl><dt>Pet</dt><dd>' + esc(data.pet) + '</dd><dt>Distância</dt><dd>' + esc(data.distancia_km) + ' km</dd><dt>Transporte</dt><dd class="total">' + brl(data.valor_transporte) + '</dd></dl><small>' + origem + '</small></div>'
+    : '<div class="res"><dl><dt>Pet</dt><dd>' + esc(data.pet) + '</dd><dt>Valor original</dt><dd>' + brl(data.valor_original) + '</dd><dt>Desconto</dt><dd>' + esc(data.desconto) + '%</dd><dt>Valor final</dt><dd class="total">' + brl(data.valor_final) + '</dd></dl><small>' + origem + '</small></div>';
+});
+
+async function conectar() {
+  const st = $('#status');
+  st.textContent = 'Verificando a API…'; st.className = '';
+  try {
+    const h = await api('/health');
+    st.textContent = 'API online: ' + h.status; st.style.color = 'var(--ok)';
+    const s = await api('/servicos');
+    if (s && Array.isArray(s.servicos) && s.servicos.length) {
+      const sel = $('#servico'), atual = sel.value;
+      sel.innerHTML = s.servicos.map(n => '<option value="' + esc(n) + '">' + esc(n.charAt(0).toUpperCase() + n.slice(1)) + '</option>').join('');
+      if (s.servicos.includes(atual)) sel.value = atual;
+      toggleCampos();
+    }
+  } catch (_) {
+    st.textContent = 'Sem resposta da API em ' + base() + '. Confira se ela está rodando e se o navegador permite o acesso (CORS).';
+    st.style.color = 'var(--err)';
+  }
+}
+
+$('#testar').addEventListener('click', conectar);
+toggleCampos();
+conectar();
+</script>
+</body>
+</html>
