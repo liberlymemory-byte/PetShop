@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.regras import (
     validar_nome,
@@ -14,6 +15,12 @@ from src.regras import (
 
 app = FastAPI(title="PetShop API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Modelos de dados
 class OrcamentoRequest(BaseModel):
